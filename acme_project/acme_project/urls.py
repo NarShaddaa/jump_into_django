@@ -14,8 +14,20 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+# Импортируем встроенные функции include() и path().
+from django.urls import include, path
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    # Если на сервер пришёл запрос к главной странице,
+    # Django проверит на совпадение с запрошенным URL
+    # все path() в файле urls.py приложения homepage.
+    path('', include('homepage.urls')),
+
+    # Если в приложении homepage не найдётся совпадений,
+    # Django продолжит искать совпадения здесь, в корневом файле urls.py.
+
+    # Если запрос начинается с catalog/,
+    # Django будет искать совпадения в файле urls.py
+    # приложения catalog.
+    path('catalog/', include('catalog.urls')),
 ]
